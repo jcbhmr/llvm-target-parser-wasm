@@ -1,0 +1,30 @@
+package jcbhmr:llvm-target-parser@22.0.0;
+
+interface version-tuple {
+  use hashing.{hash-code};
+  // https://llvm.org/doxygen/classllvm_1_1VersionTuple.html
+  resource version-tuple {
+    constructor();
+    static constructor2(major: u32);
+    static constructor3(major: u32, minor: u32);
+    static constructor4(major: u32, minor: u32, subminor: u32);
+    static constructor4(major: u32, minor: u32, subminor: u32, build: u32);
+    empty: func() -> bool;
+    get-major: func() -> u32;
+    get-minor: func() -> option<u32>;
+    get-subminor: func() -> option<u32>;
+    get-build: func() -> option<u32>;
+    without-build: func() -> version-tuple;
+    with-major-replaced: func(new-major: u32) -> version-tuple;
+    normalize: func() -> version-tuple;
+    get-as-string: func() -> string;
+    try-parse: func(%string: string) -> bool;
+    static eq: func(x: borrow<version-tuple>, y: borrow<version-tuple>) -> bool;
+    static ne: func(x: borrow<version-tuple>, y: borrow<version-tuple>) -> bool;
+    static lt: func(x: borrow<version-tuple>, y: borrow<version-tuple>) -> bool;
+    static gt: func(x: borrow<version-tuple>, y: borrow<version-tuple>) -> bool;
+    static lte: func(x: borrow<version-tuple>, y: borrow<version-tuple>) -> bool;
+    static gte: func(x: borrow<version-tuple>, y: borrow<version-tuple>) -> bool;
+    static hash-value: func(vt: borrow<version-tuple>) -> hash-code;
+  }
+}
