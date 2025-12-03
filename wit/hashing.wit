@@ -1,0 +1,13 @@
+package jcbhmr:llvm-target-parser@22.0.0;
+
+interface hashing {
+  // https://llvm.org/doxygen/classllvm_1_1hash__code.html
+  resource hash-code {
+    constructor: func();
+    static constructor2: func(value: u32) -> hash-code;
+    u32: func() -> u32;
+    static eq: func(lhs: borrow<hash-code>, rhs: borrow<hash-code>) -> bool;
+    static ne: func(lhs: borrow<hash-code>, rhs: borrow<hash-code>) -> bool;
+    static hash-value: func(code: borrow<hash-code>) -> u32;
+  }
+}
