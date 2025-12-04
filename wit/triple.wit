@@ -1,0 +1,301 @@
+package jcbhmr:llvm-target-parser@22.0.0;
+
+interface triple {
+  use version-tuple.{version-tuple};
+  enum arch-type {
+    unknown,
+    arm,
+    armeb,
+    aarch64,
+    aarch64be,
+    aarch6432,
+    arc,
+    avr,
+    bpfel,
+    bpfeb,
+    csky,
+    dxil,
+    hexagon,
+    loongarch32,
+    loongarch64,
+    m68k,
+    mips,
+    mipsel,
+    mips64,
+    mips64el,
+    msp430,
+    ppc,
+    ppcle,
+    ppc64,
+    ppc64le,
+    r600,
+    amdgcn,
+    riscv32,
+    riscv64,
+    riscv32be,
+    riscv64be,
+    sparc,
+    sparcv9,
+    sparcel,
+    systemz,
+    tce,
+    tcele,
+    thumb,
+    thumbeb,
+    x86,
+    x8664,
+    xcore,
+    xtensa,
+    nvptx,
+    nvptx64,
+    amdil,
+    amdil64,
+    hsail,
+    hsail64,
+    spir,
+    spir64,
+    spirv,
+    spirv32,
+    spirv64,
+    kalimba,
+    shave,
+    lanai,
+    wasm32,
+    wasm64,
+    renderscript32,
+    renderscript64,
+    ve,
+  }
+  enum sub-arch-type {}
+  enum vendor-type {
+    unknown,
+    apple,
+    PC,
+    SCEI,
+    freescale,
+    IBM,
+    imagination-technologies,
+    mips-technologies,
+    nvidia,
+    CSR,
+    AMD,
+    mesa,
+    SUSE,
+    open-embedded,
+    intel,
+    meta,
+  }
+  enum OS-type {}
+  enum environment-type {}
+  enum object-format-type {
+    unknown,
+    COFF,
+    DX-container,
+    ELF,
+    GOFF,
+    macho,
+    SPIRV,
+    wasm,
+    XCOFF,
+  }
+  resource triple {
+    get-default-exception-handling: func() -> exception-handling;
+    compute-data-layout: func() -> string;
+    constructor();
+    static constructor2: func(str: string) -> triple;
+    static constructor3: func(arch-str: string, vendor-str: string, OS-str: string);
+    static constructor4: func(arch-str: string, vendor-str: string, OS-str: string, environment-str: string);
+    eq: func(other: borrow<triple>) -> bool;
+    ne: func(other: borrow<triple>) -> bool;
+    get-arch: func() -> arch-type;
+    get-sub-arch: func() -> sub-arch-type;
+    get-vendor: func() -> vendor-type;
+    get-OS: func() -> OS-type;
+    has-envirnoment: func() -> bool;
+    get-environment: func() -> environment-type;
+    get-OS-version: func() -> version-tuple;
+    get-OS-major-version: func() -> u32;
+    get-mac-OSX-version: func(version: borrow<version-tuple>) -> bool;
+    get-i-OS-version: func() -> version-tuple;
+    get-watch-OS-version: func() -> version-tuple;
+    get-driver-kit-version: func() -> version-tuple;
+    get-vulkan-version: func() -> version-tuple;
+    get-DXIL-version: func() -> version-tuple;
+    str: func() -> string;
+    get-triple: func() -> string;
+    empty: func() -> bool;
+    get-arch-name: func() -> string;
+    get-vendor-name: func() -> string;
+    get-OS-name: func() -> string;
+    get-environment-name: func() -> string;
+    get-OS-and-environment-name: func() -> string;
+    get-environment-version-string: func() -> string;
+    set-arch: func(kind: arch-type, sub-arch: option<sub-arch-type>);
+    set-vendor: func(kind: vendor-type);
+    set-OS: func(kind: OS-type);
+    set-environment: func(kind: environment-type);
+    set-object-format: func(kind: object-format-type);
+    set-triple: func(str: string);
+    set-arch-name: func(str: string);
+    set-vendor-name: func(str: string);
+    set-OS-name: func(str: string);
+    set-environment-name: func(str: string);
+    set-OS-and-environment-name: func(str: string);
+    get32-bit-arch-variant: func() -> triple;
+    get64-bit-arch-variant: func() -> triple;
+    get-big-endian-arch-variant: func() -> triple;
+    get-little-endian-arch-variant: func() -> triple;
+    is-little-endian: func() -> bool;
+    is-compatible-with: func(other: borrow<triple>) -> bool;
+    is-GPU: func() -> bool;
+    merge: func(other: borrow<triple>) -> string;
+    get-minimum-supported-OS-version: version-tuple;
+    static get-canonical-version-for-OS: func(OS-kind: OS-type, version: borrow<version-tuple>, is-in-valid-range: bool) -> version-tuple;
+    static is-valid-version-for-OS: func(OS-kind: OS-type, version: borrow<version-tuple>) -> bool;
+    static get-arch-type-name: func(kind: arch-type) -> string;
+    static get-arch-name: func(kind: arch-type, sub-arch: option<sub-arch-type>) -> string;
+    static get-arch-type-prefix: func(kind: arch-type) -> string;
+    static get-vendor-type-name: func(kind: vendor-type) -> string;
+    static get-OS-type-name: func(kind: OS-type) -> string;
+    static get-environment-type-name: func(kind: environment-type) -> string;
+    static get-object-format-type-name: func(kind: object-format-type) -> string;
+    static get-arch-type-for-LLVM-name: func(str: string) -> arch-type;
+    normalize: func(form: option<canonical-form>) -> string;
+    static normalize2: func(str: string, form: option<canonical-form>) -> string;
+    get-arch-pointer-bit-width: func() -> u32;
+    get-trampoline-size: func() -> u32;
+    is-arch64-bit: func() -> bool;
+    is-arch32-bit: func() -> bool;
+    is-arch16-bit: func() -> bool;
+    is-OS-version-LT: func(major: u32, minor: option<u32>, micro: option<u32>) -> bool;
+    is-OS-version-GE: func(major: u32, minor: option<u32>, micro: option<u32>) -> bool;
+    is-OS-version-LT2: func(other: borrow<triple>) -> bool;
+    is-OS-version-GE2: func(other: borrow<triple>) -> bool;
+    is-mac-OSX-version-LT: func(major: u32, minor: option<u32>, micro: option<u32>) -> bool;
+    is-mac-OSX-version-GE: func(major: u32, minor: option<u32>, micro: option<u32>) -> bool;
+    is-mac-OSX: func() -> bool;
+    is-ios: func() -> bool;
+    is-tvos: func() -> bool;
+    is-watchos: func() -> bool;
+    is-watch-ABI: func() -> bool;
+    is-xros: func() -> bool;
+    is-bridgeos: func() -> bool;
+    is-driver-kit: func() -> bool;
+    is-OS-zos: func() -> bool;
+    is-apple-macho: func() -> bool;
+    is-OS-darwin: func() -> bool;
+    is-simulator-environment: func() -> bool;
+    is-mac-catalyst-environment: func() -> bool;
+    is-target-machine-mac: func() -> bool;
+    is-OS-netbsd: func() -> bool;
+    is-OS-openbsd: func() -> bool;
+    is-OS-freebsd: func() -> bool;
+    is-OS-fuchsia: func() -> bool;
+    is-OS-dragonfly: func() -> bool;
+    is-OS-solaris: func() -> bool;
+    is-OS-IAMCU: func() -> bool;
+    is-OS-unknown: func() -> bool;
+    is-GNU-environment: func() -> bool;
+    is-OS-haiku: func() -> bool;
+    is-UEFI: func() -> bool;
+    is-OS-windows: func() -> bool;
+    is-known-windows-MSVC-environment: func() -> bool;
+    is-windows-MSVC-environment: func() -> bool;
+    is-windows-arm64-ec: func() -> bool;
+    is-windows-core-CLR-environment: func() -> bool;
+    is-windows-itanium-environment: func() -> bool;
+    is-windows-cygwin-environment: func() -> bool;
+    is-windows-GNU-environment: func() -> bool;
+    is-OS-cyg-ming: func() -> bool;
+    is-OS-MSVCRT: func() -> bool;
+    is-OS-linux: func() -> bool;
+    is-OS-kfreebsd: func() -> bool;
+    is-OS-hurd: func() -> bool;
+    is-OS-WASI: func() -> bool;
+    is-OS-emscripten: func() -> bool;
+    is-OS-glibc: func() -> bool;
+    is-OS-AIX: func() -> bool;
+    is-OS-serenity: func() -> bool;
+    is-OS-bin-format-ELF: func() -> bool;
+    is-OS-bin-format-COFF: func() -> bool;
+    is-OS-bin-format-GOFF: func() -> bool;
+    is-OS-bin-format-macho: func() -> bool;
+    is-OS-bin-format-WASM: func() -> bool;
+    is-OS-bin-format-XCOFF: func() -> bool;
+    is-OS-bin-format-DX-container: func() -> bool;
+    is-WALI: func() -> bool;
+    is-PS4: func() -> bool;
+    is-PS5: func() -> bool;
+    is-PS: func() -> bool;
+    is-android: func() -> bool;
+    is-android-version-LT: func(major: u32) -> bool;
+    is-musl: func() -> bool;
+    is-OHOS-family: func() -> bool;
+    is-open-HOS: func() -> bool;
+    is-OS-liteos: func() -> bool;
+    is-DXIL: func() -> bool;
+    is-shader-model-OS: func() -> bool;
+    is-vulkan-OS: func() -> bool;
+    is-OS-managarm: func() -> bool;
+    is-shader-stage-environment: func() -> bool;
+    is-SPIR: func() -> bool;
+    is-SPIRV: func() -> bool;
+    is-SPIR-or-SPIRV: func() -> bool;
+    is-SPIRV-logical: func() -> bool;
+    is-NVPTX: func() -> bool;
+    is-AMD-GCN: func() -> bool;
+    is-AMD-GPU: func() -> bool;
+    is-thumb: func() -> bool;
+    is-ARM: func() -> bool;
+    is-target-EHABI-compatible: func() -> bool;
+    is-target-AEABI: func() -> bool;
+    is-target-GNU-AEABI: func() -> bool;
+    is-target-musl-AEABI: func() -> bool;
+    is-arm-t32: func() -> bool;
+    is-arm-m-class: func() -> bool;
+    is-aarch64: func() -> bool;
+    is-aarch642: func(pointer-width: s32) -> bool;
+    is-loong-arch32: func() -> bool;
+    is-loong-arch64: func() -> bool;
+    is-loong-arch: func() -> bool;
+    is-MIPS32: func() -> bool;
+    is-MIPS64: func() -> bool;
+    is-MIPS: func() -> bool;
+    is-PPC: func() -> bool;
+    is-PPC32: func() -> bool;
+    is-PPC64: func() -> bool;
+    is-PPC64-ELF-v2-ABI: func() -> bool;
+    is-PPC32-secure-PLT: func() -> bool;
+    is-RISCV32: func() -> bool;
+    is-RISCV64: func() -> bool;
+    is-RISCV: func() -> bool;
+    is-SPARC32: func() -> bool;
+    is-SPARC64: func() -> bool;
+    is-SPARC: func() -> bool;
+    is-system-z: func() -> bool;
+    is-x86: func() -> bool;
+    is-x8632: func() -> bool;
+    is-x8664: func() -> bool;
+    is-VE: func() -> bool;
+    is-WASM: func() -> bool;
+    is-CSKY: func() -> bool;
+    is-arm64e: func() -> bool;
+    is-ABIN32: func() -> bool;
+    is-x32: func() -> bool;
+    is-BPF: func() -> bool;
+    is-time64-ABI: func() -> bool;
+    is-hard-float-ABI: func() -> bool;
+    supports-COMDAT: func() -> bool;
+    has-default-emulated-TLS: func() -> bool;
+    has-default-TLS-DESC: func() -> bool;
+    has-default-data-sections: func() -> bool;
+    has-DLL-import-export: func() -> bool;
+    static get-arch-pointer-bit-width: func(arch: arch-type) -> u32;
+  }
+  enum canonical-form {
+    any,
+    three-ident,
+    four-ident,
+    five-ident,
+  }
+}
